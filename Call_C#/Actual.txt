@@ -1,0 +1,27 @@
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        // Initialize an HttpClient instance to handle the HTTP request
+        var client = new HttpClient();
+        
+        // Set the URL of the currency conversion service API
+        var apiUrl = "http://localhost:3000/convert";
+        
+        // Create the request body with the amount to be converted, serialized as JSON
+        var requestBody = "{'amount_in_rs': '1000'}";
+
+        // Send an HTTP POST request to the API with the request body
+        var response = await client.PostAsync(apiUrl, new StringContent(requestBody, System.Text.Encoding.UTF8, "application/json"));
+
+        // Print the response status code to the console
+        Console.WriteLine("Response Code: " + response.StatusCode);
+        
+        // Print the response body to the console
+        Console.WriteLine("Response Body: " + await response.Content.ReadAsStringAsync());
+    }
+}
